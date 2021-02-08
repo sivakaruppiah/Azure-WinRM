@@ -6,14 +6,7 @@ resource "azurerm_public_ip" "win_pubip" {
   allocation_method   = "Dynamic"
   domain_name_label   = "${var.server_name}-${lower(substr("${join("", split(":", timestamp()))}", 8, -1))}"
 
-  tags = {
-    X-Dept        = var.tag_dept
-    X-Customer    = var.tag_customer
-    X-Project     = var.tag_project
-    X-Application = var.tag_application
-    X-Contact     = var.tag_contact
-    X-TTL         = var.tag_ttl
-  }
+
 }
 
 #create the network interface and put it on the proper vlan/subnet
@@ -30,15 +23,10 @@ resource "azurerm_network_interface" "win_ip" {
     public_ip_address_id          = azurerm_public_ip.win_pubip.id
   }
 
-  tags = {
-    X-Dept        = var.tag_dept
-    X-Customer    = var.tag_customer
-    X-Project     = var.tag_project
-    X-Application = var.tag_application
-    X-Contact     = var.tag_contact
-    X-TTL         = var.tag_ttl
-  }
+
 }
+
+
 
 #create the actual VM
 resource "azurerm_virtual_machine" "win" {
@@ -49,9 +37,9 @@ resource "azurerm_virtual_machine" "win" {
   vm_size               = var.vm_size
 
   storage_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
+    publisher = "MicrosoftSQLServer"
+    offer     = "sql2019-ws2019"
+    sku       = "SQLDEV"
     version   = "latest"
   }
 
@@ -91,14 +79,7 @@ resource "azurerm_virtual_machine" "win" {
     }
   }
 
-  tags = {
-    X-Dept        = var.tag_dept
-    X-Customer    = var.tag_customer
-    X-Project     = var.tag_project
-    X-Application = var.tag_application
-    X-Contact     = var.tag_contact
-    X-TTL         = var.tag_ttl
-  }
+
 
   connection {
     host     = azurerm_public_ip.win_pubip.fqdn
