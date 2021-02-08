@@ -1,6 +1,6 @@
 # Azure Options
 variable "azure_region" {
-  default     = "centralus" # Use region shortname here as it's interpolated into the URLs
+  default     = "uksouth" # Use region shortname here as it's interpolated into the URLs
   description = "The location/region where the resources are created."
 }
 
@@ -33,32 +33,6 @@ variable "vm_size" {
 }
 
 variable "server_name" {
-  default = "win"
+  default = "win-cms"
   description = "Specify the hostname for the Chef server"
-}
-
-# Required tags
-variable "tag_customer" {
-  description = "Customer name"
-}
-
-variable "tag_project" {
-  description = "Identify the project"
-}
-
-variable "tag_dept" {
-  description = "Dept. i.e. Sales/CS/etc."
-}
-
-variable "tag_contact" {
-  description = "Email address for project owner"
-}
-
-variable "tag_application" {
-  description = "What app does this run"
-}
-
-variable "tag_ttl" {
-  default = 4
-  description = "Time, in hours, the environment should be allowed to live"
 }
